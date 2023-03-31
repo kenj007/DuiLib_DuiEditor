@@ -1,4 +1,4 @@
-// ViewControlTree.cpp : ÊµÏÖÎÄ¼ş
+// ViewControlTree.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -50,7 +50,7 @@ END_MESSAGE_MAP()
 
 
 
-// CViewControlTree ÏûÏ¢´¦Àí³ÌĞò
+// CViewControlTree æ¶ˆæ¯å¤„ç†ç¨‹åº
 BOOL CDockControlTreeCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
 	BOOL bRes = CTreeCtrl::OnNotify(wParam, lParam, pResult);
@@ -172,16 +172,16 @@ HTREEITEM CDockControlTreeCtrl::AddNewControl(xml_node nodeNewContrl, xml_node n
 		HTREEITEM hItemParent = GetParentItem(hItemCurrent);
 		if(hItemParent == NULL)	
 		{
-			AfxMessageBox(_T("²åÈëµ½¿Ø¼şÊ÷ÖĞ³ö´íÁË¡£"));
+			AfxMessageBox(_T("æ’å…¥åˆ°æ§ä»¶æ ‘ä¸­å‡ºé”™äº†ã€‚"));
 			return NULL;
 		}
 
 		HTREEITEM hPrev = GetNextItem(hItemCurrent, TVGN_PREVIOUS);
-		if(hPrev) //²åÈëµ½Ç°Ò»¸öĞÖµÜÏîµÄºóÃæ
+		if(hPrev) //æ’å…¥åˆ°å‰ä¸€ä¸ªå…„å¼Ÿé¡¹çš„åé¢
 		{
 			hItemNew = AddNewControl(nodeNewContrl, hItemParent, hPrev);
 		}
-		else //²åÈëµ½µÚÒ»¸ö
+		else //æ’å…¥åˆ°ç¬¬ä¸€ä¸ª
 		{
 			hItemNew = AddNewControl(nodeNewContrl, hItemParent, TVI_FIRST);
 		}
@@ -192,7 +192,7 @@ HTREEITEM CDockControlTreeCtrl::AddNewControl(xml_node nodeNewContrl, xml_node n
 		HTREEITEM hItemParent = GetParentItem(hItemCurrent);
 		if(hItemParent == NULL)	
 		{
-			AfxMessageBox(_T("²åÈëµ½¿Ø¼şÊ÷ÖĞ³ö´íÁË¡£"));
+			AfxMessageBox(_T("æ’å…¥åˆ°æ§ä»¶æ ‘ä¸­å‡ºé”™äº†ã€‚"));
 			return NULL;
 		}
 		return AddNewControl(nodeNewContrl, hItemParent, hItemCurrent);
@@ -281,7 +281,7 @@ void CDockControlTreeCtrl::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 	CMenu menutab;
 	menutab.LoadMenu(IDR_MENU_TABLAYOUT_SETSEL);
 
-	//TabLayoutÁĞ³öÇĞ»»²Ëµ¥Ïî
+	//TabLayoutåˆ—å‡ºåˆ‡æ¢èœå•é¡¹
 	hItem = GetSelectedItem();
 	if(hItem)
 	{
@@ -300,13 +300,13 @@ void CDockControlTreeCtrl::OnNMRClick(NMHDR *pNMHDR, LRESULT *pResult)
 					for (xml_node nd = node.first_child(); nd; nd=nd.next_sibling())
 					{
 						CString temp;
-						temp.Format(_T("Ò³Ãæ%d %s name=%s"), nCmd-ID_TABLAYOUT_SETSEL_00+1, XML2T(nd.name()), XML2T(nd.attribute(XTEXT("name")).value()));
+						temp.Format(_T("é¡µé¢%d %s name=%s"), nCmd-ID_TABLAYOUT_SETSEL_00+1, XML2T(nd.name()), XML2T(nd.attribute(XTEXT("name")).value()));
 						::InsertMenu(menutab.GetSubMenu(0)->GetSubMenu(0)->m_hMenu, -1, MF_BYPOSITION, nCmd, temp);
 						nCmd++;
 					}
 
 					::InsertMenu(menu.GetSubMenu(0)->m_hMenu, -1, MF_BYPOSITION | MF_POPUP, 
-						(UINT_PTR)menutab.GetSubMenu(0)->GetSubMenu(0)->m_hMenu, _T("ÇĞ»»TabLayoutÒ³Ãæ"));
+						(UINT_PTR)menutab.GetSubMenu(0)->GetSubMenu(0)->m_hMenu, _T("åˆ‡æ¢TabLayouté¡µé¢"));
 				}
 			}
 		}
@@ -383,7 +383,7 @@ BOOL CDockControlTreeCtrl::OnDragXmlNode(HTREEITEM src, HTREEITEM dest)
 
 	//
 
-	//ÅĞ¶ÏÄ¿±êÎ»ÖÃÊÇ·ñÈİÆ÷
+	//åˆ¤æ–­ç›®æ ‡ä½ç½®æ˜¯å¦å®¹å™¨
 	if(!g_duiProp.IsContainerUI(nodedest))
 		return FALSE;
 
@@ -393,7 +393,7 @@ BOOL CDockControlTreeCtrl::OnDragXmlNode(HTREEITEM src, HTREEITEM dest)
 	else
 		nodeNew = nodedest.append_move(nodesrc);
 
-	//ÍÏ¶¯½ÚµãÖ®ºó, Ë¢ĞÂÊÓÍ¼
+	//æ‹–åŠ¨èŠ‚ç‚¹ä¹‹å, åˆ·æ–°è§†å›¾
 	if(nodeNew)
 	{
 		CDuiEditorViewDesign *pView = GetUIManager()->GetDesignView();
@@ -409,23 +409,23 @@ BOOL CDockControlTreeCtrl::OnDragXmlNode(HTREEITEM src, HTREEITEM dest)
 HTREEITEM CDockControlTreeCtrl::GetNextItemEx(HTREEITEM hItem)
 {
 	HTREEITEM ht = NULL;
-	ht = GetChildItem(hItem); //ÏÈ²éÕÒ×ÓÏî
-	if(ht==NULL) //Ã»ÓĞ×ÓÏî£¬
+	ht = GetChildItem(hItem); //å…ˆæŸ¥æ‰¾å­é¡¹
+	if(ht==NULL) //æ²¡æœ‰å­é¡¹ï¼Œ
 	{
-		ht = GetNextSiblingItem(hItem);//ÔÙ²éÕÒĞÖµÜÏî
-		if(ht==NULL) //Ã»ÓĞĞÖµÜÏî£¬¾Í¿ªÊ¼»Ø¹ö²éÕÒ¸¸ÏîµÄĞÖµÜ
+		ht = GetNextSiblingItem(hItem);//å†æŸ¥æ‰¾å…„å¼Ÿé¡¹
+		if(ht==NULL) //æ²¡æœ‰å…„å¼Ÿé¡¹ï¼Œå°±å¼€å§‹å›æ»šæŸ¥æ‰¾çˆ¶é¡¹çš„å…„å¼Ÿ
 		{
-			HTREEITEM hPare = GetParentItem(hItem); //»ñÈ¡¸¸Ïî
+			HTREEITEM hPare = GetParentItem(hItem); //è·å–çˆ¶é¡¹
 			while (hPare!=NULL)
 			{
-				ht = GetNextSiblingItem(hPare); //²éÕÒ¸¸ÏîµÄĞÖµÜÏî
-				if(ht==NULL) //¸¸ÏîÃ»ÓĞĞÖµÜÏî, 
+				ht = GetNextSiblingItem(hPare); //æŸ¥æ‰¾çˆ¶é¡¹çš„å…„å¼Ÿé¡¹
+				if(ht==NULL) //çˆ¶é¡¹æ²¡æœ‰å…„å¼Ÿé¡¹, 
 				{
-					hPare = GetParentItem(hPare); //¾Í¼ÌĞø²éÕÒ¸¸ÏîµÄ¸¸Ïî£¬Ò»Ö±ÍùÉÏ»Ø¹ö¡£
+					hPare = GetParentItem(hPare); //å°±ç»§ç»­æŸ¥æ‰¾çˆ¶é¡¹çš„çˆ¶é¡¹ï¼Œä¸€ç›´å¾€ä¸Šå›æ»šã€‚
 				}
 				else
 				{
-					return ht; //¸¸ÏîÓĞĞÖµÜÏî£¬¾Í·µ»Ø¡£
+					return ht; //çˆ¶é¡¹æœ‰å…„å¼Ÿé¡¹ï¼Œå°±è¿”å›ã€‚
 				}
 			}
 		}
@@ -471,7 +471,7 @@ void CDockControlTreeCtrl::OnTvnBeginrdrag(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	*pResult = 0;
 
-	//Èç¹ûÊÇÎŞÒâÍÏ¶¯£¬Ôò·ÅÆú²Ù×÷ 
+	//å¦‚æœæ˜¯æ— æ„æ‹–åŠ¨ï¼Œåˆ™æ”¾å¼ƒæ“ä½œ 
 	if( (GetTickCount() - m_dwDragStart) < 200 )       
 		return; 
 
@@ -543,7 +543,7 @@ void CDockControlTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 			{      
 				if( htiParent == m_hItemDragSrc )   
 				{                 
-					//½¨Á¢Ò»¸öÁÙÊ±½ÚµãÒÔÍê³É²Ù×÷             
+					//å»ºç«‹ä¸€ä¸ªä¸´æ—¶èŠ‚ç‚¹ä»¥å®Œæˆæ“ä½œ             
 					HTREEITEM  htiNewTemp = CopyBranch( m_hItemDragSrc,NULL,TVI_LAST );               
 					HTREEITEM  htiNew = CopyBranch( htiNewTemp,m_hItemDragDest, TVI_FIRST );               
 					DeleteItem( htiNewTemp );               
@@ -582,11 +582,11 @@ BOOL CDockControlTreeCtrl::OnDraging()
 	if(hTreeItem == NULL)
 		return FALSE;
 
-	//²»ÔÊĞíÍÏ×§µ½×Ô¼º
+	//ä¸å…è®¸æ‹–æ‹½åˆ°è‡ªå·±
 	if(m_hItemDragSrc == hTreeItem)
 		return FALSE;
 
-	//²»ÔÊĞí¸¸Ç×ÍÏµ½¶ù×Ó
+	//ä¸å…è®¸çˆ¶äº²æ‹–åˆ°å„¿å­
 	HTREEITEM hParent = GetParentItem(hTreeItem);
 	while (hParent != NULL)
 	{
@@ -626,7 +626,7 @@ HTREEITEM CDockControlTreeCtrl::CopyItem(HTREEITEM hItem, HTREEITEM htiNewParent
 	hNewItem = InsertItem( &tvstruct );   
 	sText.ReleaseBuffer(); 
 
-	//ÏŞÖÆ¿½±´ÌõÄ¿Êı¾İºÍÌõÄ¿×´Ì¬ 
+	//é™åˆ¶æ‹·è´æ¡ç›®æ•°æ®å’Œæ¡ç›®çŠ¶æ€ 
 	SetItemData( hNewItem,GetItemData(hItem) );  
 	SetItemState( hNewItem,GetItemState(hItem,TVIS_STATEIMAGEMASK),TVIS_STATEIMAGEMASK); 
 
@@ -651,7 +651,7 @@ HTREEITEM CDockControlTreeCtrl::CopyBranch(HTREEITEM htiBranch, HTREEITEM htiNew
 void CDockControlTreeCtrl::OnNMCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 	*pResult = 0;
 
 	*pResult = CDRF_NOTIFYITEMDRAW;
@@ -707,6 +707,10 @@ BOOL CDockControlTreeCtrl::OnToolTipText( UINT id, NMHDR * pNMHDR, LRESULT * pRe
 
  	UINT nFlags;
  	HTREEITEM hitem = HitTest( pt, &nFlags ); //Get item pointed by mouse
+	if (NULL == hitem)
+	{
+		return FALSE;
+	}
 
 	xml_node node((xml_node_struct *)GetItemData(hitem));;
 
@@ -721,7 +725,10 @@ BOOL CDockControlTreeCtrl::OnToolTipText( UINT id, NMHDR * pNMHDR, LRESULT * pRe
 	}
 	strTipText += _T(">");
 
-	_tcscpy_s(pToolTipText->szText, 80, strTipText.Left(79));
+	//_tcscpy_s(pToolTipText->szText, 80, strTipText.Left(79));
+	LPSTR ptr = strTipText.GetBuffer();
+	MultiByteToWideChar(CP_ACP, MB_COMPOSITE, ptr, 79, (LPWSTR)pToolTipText->szText, 80);
+	strTipText.ReleaseBuffer();
 	*pResult = 0;
 	return TRUE;    // message was handled
 }
